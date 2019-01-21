@@ -14,7 +14,7 @@ configure({ adapter: new Adapter() });
 declare const sinon;
 
 describe('<AbcRmsMyRequests />', () => {
-	const descTxt = 'TestingThisOneOut';
+	const descTxt = '';
 	let componentDidMountSpy;
 	let renderedElement;
 
@@ -54,10 +54,6 @@ describe('<AbcRmsMyRequests />', () => {
 	});
 
 	it('<AbcRmsMyRequests /> should render an ul with 3 items (using the mock data)', (done) => {
-		// New instance should be created for this test due to setTimeout
-		// If the global renderedElement used, the result of "ul li"" will be 10 instead of 3
-		// because the state changes to 10 in the last test and
-		// the last test is executed before this one bacause of setTimeout
 		let renderedElement1 = mount(<AbcRmsMyRequests description={descTxt} />);
 		// Wait for 1 second to check if your mock results are retrieved
 		setTimeout(() => {
@@ -69,25 +65,41 @@ describe('<AbcRmsMyRequests />', () => {
 		}, 1000);
 	});
 
-	it('<AbcRmsMyRequests /> should render 10 list items (triggering setState from the test)', () => {
-		renderedElement.setState({
-			results: {
-				value: [
-					{ Title: 'Mock List 1', Id: '1' },
-					{ Title: 'Mock List 2', Id: '2' },
-					{ Title: 'Mock List 3', Id: '3' },
-					{ Title: 'Mock List 4', Id: '4' },
-					{ Title: 'Mock List 5', Id: '5' },
-					{ Title: 'Mock List 6', Id: '6' },
-					{ Title: 'Mock List 7', Id: '7' },
-					{ Title: 'Mock List 8', Id: '8' },
-					{ Title: 'Mock List 9', Id: '9' },
-					{ Title: 'Mock List 10', Id: '10' }
-				]
+	it('<AbcRmsMyRequests /> should render 3 list items (triggering setState from the test)', () => {
+		const mockRequests: Request[] = [
+			{
+				title: 'T1',
+				requestType: 'R1',
+				description: 'D1',
+				dateOfRequest: '01/14/19',
+				department: 'Dep1',
+				status: 'Not Started',
+				link: 'Http://'
+			},
+			{
+				title: 'T2',
+				requestType: 'R2',
+				description: 'D2',
+				dateOfRequest: '02/14/19',
+				department: 'Dep2',
+				status: 'Rejected',
+				link: 'Http://'
+			},
+			{
+				title: 'T3',
+				requestType: 'R3',
+				description: 'D3',
+				dateOfRequest: '03/14/19',
+				department: 'Dep3',
+				status: 'Approved',
+				link: 'Http://'
 			}
+		];
+		renderedElement.setState({
+			myRequests: mockRequests
 		});
 
 		expect(renderedElement.update().state('results')).to.not.be.null;
-		expect(renderedElement.update().find('ul li').length).to.be.equal(10);
+		expect(renderedElement.update().find('ul li').length).to.be.equal(3);
 	});
 });

@@ -11,7 +11,8 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '@pnp
 import { GroupedList, IGroup } from 'office-ui-fabric-react/lib/components/GroupedList/index';
 
 let _items: Request[] = [];
-
+const editFormUrl = '/sites/RMS/SitePages/Edit-Request.aspx';
+const viewFormUrl = '/sites/RMS/SitePages/View-Request.aspx';
 export default class AbcRmsMyRequests extends React.Component<IAbcRmsMyRequestsProps, IState> {
 	constructor(props: IAbcRmsMyRequestsProps) {
 		super(props);
@@ -159,9 +160,9 @@ export default class AbcRmsMyRequests extends React.Component<IAbcRmsMyRequestsP
 				//		maxWidth: 100,
 				render: (item: any) => {
 					if (item['status'] === 'Not Started') {
-						return <a href="http://google.com/Edit">Edit</a>;
+						return <a href={editFormUrl}>Edit</a>;
 					} else {
-						return <a href="http://google.com/View">View</a>;
+						return <a href={viewFormUrl}>View</a>;
 					}
 				}
 			}
